@@ -2,7 +2,7 @@ package com.toyproject.payrecord.domain.employee.domain;
 
 import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.domain.company.domain.Company;
-import com.toyproject.payrecord.global.utils.StringUtils;
+import com.toyproject.payrecord.global.utils.StringUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -51,8 +51,8 @@ public class Employee extends BaseEntity {
     }
 
     private void validate(String email, String password) {
-        StringUtils.validateEmail(email);
-        StringUtils.validatePassword(password);
+        StringUtil.validateEmail(email);
+        StringUtil.validatePassword(password);
     }
 
 }

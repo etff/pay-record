@@ -28,7 +28,7 @@ public class EmpController {
         String name = res.getName();
         String email = res.getEmail();
         String password = res.getPassword();
-        Employee emp = empService.singUp(name, email, password);
+        Employee emp = empService.singUp(email, password);
 
         URI location = new URI("/api/employees/" + emp.getId());
         return ResponseEntity.created(location).body("{}");

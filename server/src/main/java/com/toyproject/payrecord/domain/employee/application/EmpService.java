@@ -11,8 +11,8 @@ public class EmpService {
 
     private final EmpRepository empRepository;
 
-    public Employee singUp(String name, String email, String password) {
-        Employee employee = new Employee(name, email, password, null);
+    public Employee singUp(String email, String password) {
+        Employee employee = new Employee(email, password);
 
         return empRepository.save(employee);
     }

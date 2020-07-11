@@ -3,7 +3,7 @@ package com.toyproject.payrecord.global.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtils {
+public class StringUtil {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$");
     private static final String NOT_EMAIL_PATTERN = "이메일 형식이 올바르지 않습니다.";
@@ -17,7 +17,7 @@ public class StringUtils {
     private static final String SPECIAL_CHARACTER_NOT_ALLOW = "한글,숫자,영문 10자 이내로 작성하여 주세요.";
     private static final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\\s+]{1,10}");
 
-    private StringUtils() {
+    private StringUtil() {
     }
 
     public static boolean isBlank(String value) {
@@ -32,6 +32,10 @@ public class StringUtils {
     }
 
     public static void validateEmail(final String email) {
+        if (isBlank(email)) {
+            throw new IllegalArgumentException(NULL_NOT_ALLOW);
+        }
+
         if (!isPatternMatched(email, EMAIL_PATTERN).find()) {
             throw new IllegalArgumentException(NOT_EMAIL_PATTERN);
         }

@@ -17,7 +17,6 @@ class EmployeeTest {
 
     @BeforeEach
     public void setUp() {
-        email = "aaa@aaa.com";
         password = "aaa";
         fcmToken = "aaa";
     }
@@ -27,14 +26,6 @@ class EmployeeTest {
     @NullAndEmptySource
     void testEmptyOrNull(final String inputText) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Employee(inputText, email, password, fcmToken));
-    }
-
-    @DisplayName(value = "이름에 영문, 한글이 아닌 값을 입력할 경우, IllegalArgumentException 이 발생")
-    @ParameterizedTest
-    @ValueSource(strings = {"**", "999", "&&&"})
-    void testNotName (final String inputText) {
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Employee(inputText, email, password, fcmToken));
+                .isThrownBy(() -> new Employee(inputText, password, fcmToken));
     }
 }

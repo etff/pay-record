@@ -1,7 +1,7 @@
 package com.toyproject.payrecord.domain.work.domain;
 
 import com.toyproject.payrecord.config.BaseEntity;
-import com.toyproject.payrecord.global.utils.StringUtils;
+import com.toyproject.payrecord.global.utils.StringUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ public class Timeline extends BaseEntity {
     private Day day;
 
     public Timeline(String event) {
-        if (StringUtils.isBlank(event)) {
+        if (StringUtil.isBlank(event)) {
             throw new IllegalArgumentException(NULL_NOT_ALLOW);
         }
         this.event = event;

@@ -34,12 +34,13 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public static String createToken(String email) {
+    public static String createToken(Long empId, String email) {
         Date now = new Date();
 
         String token = Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(SUBJECT)
+                .claim("empId", empId)
                 .claim("email", email)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + EXPIRE_TIME))
@@ -48,12 +49,13 @@ public class JwtUtil {
         return token;
     }
 
-    public static String refreshToken(String email) {
+    public static String refreshToken(Long empId, String email) {
         Date now = new Date();
 
         String token = Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(SUBJECT)
+                .claim("empId", empId)
                 .claim("email", email)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + REPRESH_EXPIRE_TIME))

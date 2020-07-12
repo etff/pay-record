@@ -25,7 +25,6 @@ public class EmpController {
 
     @PostMapping("/employees")
     public ResponseEntity<?> singUp(@Valid @RequestBody SingUpRequest res) throws URISyntaxException {
-        String name = res.getName();
         String email = res.getEmail();
         String password = res.getPassword();
         Employee emp = empService.singUp(email, password);

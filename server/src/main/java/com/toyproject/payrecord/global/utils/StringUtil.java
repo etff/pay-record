@@ -60,9 +60,9 @@ public class StringUtil {
         if (!isBlank(password)) {
             int passwordLength = password.trim().length();
 
-            if (checkNameRange(passwordLength)) {
-                throw new IllegalArgumentException(PASSWORD_LENGTH_ERROR);
-            }
+//            if (checkNameRange(passwordLength)) {
+//                throw new IllegalArgumentException(PASSWORD_LENGTH_ERROR);
+//            }
         }
     }
 

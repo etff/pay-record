@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
 import javax.servlet.Filter;
 
 @Configuration
@@ -38,12 +41,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .and()
                 .authorizeRequests()
-                    .antMatchers("/authenticate").permitAll()
-                    .antMatchers("/hcheck").permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers("/api/v1/auth").permitAll()
+                    .antMatchers("/api/v1/employees").permitAll()
+                    .antMatchers("/api/v1/hcheck").permitAll()
+                    .anyRequest().permitAll()
                 .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilter(filter)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    @Override
+
+    public void configure(WebSecurity web) throws Exception {
+
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui",
+                "/swagger-resources", "/configuration/security",
+                "/swagger-ui.html", "/webjars/**", "/swagger/**");
     }
 
     @Bean

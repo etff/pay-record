@@ -4,6 +4,8 @@ package com.toyproject.payrecord.domain.work.domain;
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
@@ -17,6 +19,8 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "day")
+@Builder
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Day {
 
@@ -29,17 +33,17 @@ public class Day {
     private Employee employee;
 
     @ApiModelProperty(value = "계획시작시간", required = false)
-    private int startTime;
+    private String startTime;
     @ApiModelProperty(value = "계획종료시간", required = false)
-    private int endTime;
+    private String endTime;
 
     @ApiModelProperty(value = "지각여부", required = false)
     private boolean isLate;
 
     @ApiModelProperty(value = "근무실제시작시간", required = false)
-    private int workStartTime;
+    private String workStartTime;
     @ApiModelProperty(value = "근무실제종료시간", required = false)
-    private int workEndTime;
+    private String workEndTime;
 
     @ApiModelProperty(value = "계획시간", required = false)
     private int planTime;

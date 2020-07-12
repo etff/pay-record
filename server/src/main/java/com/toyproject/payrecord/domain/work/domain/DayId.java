@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-class DayId implements Serializable {
+public class DayId implements Serializable {
 
     @Column(name = "employee_id")
     private Long employeeId;

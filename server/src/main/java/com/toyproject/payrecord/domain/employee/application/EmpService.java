@@ -3,6 +3,7 @@ package com.toyproject.payrecord.domain.employee.application;
 import com.toyproject.payrecord.domain.company.application.CompanyNotExistedException;
 import com.toyproject.payrecord.domain.company.domain.Company;
 import com.toyproject.payrecord.domain.company.domain.CompanyRepository;
+import com.toyproject.payrecord.domain.employee.application.dto.EmpResponseDto;
 import com.toyproject.payrecord.domain.employee.domain.EmpRepository;
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import lombok.RequiredArgsConstructor;

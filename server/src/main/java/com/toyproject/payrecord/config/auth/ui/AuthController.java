@@ -2,13 +2,10 @@ package com.toyproject.payrecord.config.auth.ui;
 
 import com.toyproject.payrecord.config.auth.dto.AuthRequest;
 import com.toyproject.payrecord.config.auth.dto.AuthResponse;
-import com.toyproject.payrecord.domain.employee.application.EmpResponseDto;
+import com.toyproject.payrecord.domain.employee.application.dto.EmpResponseDto;
 import com.toyproject.payrecord.domain.employee.application.EmpService;
-import com.toyproject.payrecord.domain.employee.domain.Employee;
 import com.toyproject.payrecord.global.utils.JwtUtil;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

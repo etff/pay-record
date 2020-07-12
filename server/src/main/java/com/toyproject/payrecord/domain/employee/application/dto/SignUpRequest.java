@@ -1,6 +1,5 @@
-package com.toyproject.payrecord.dto;
+package com.toyproject.payrecord.domain.employee.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SingUpRequest {
+public class SignUpRequest {
 
     @NotNull
     @Email

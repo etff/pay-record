@@ -1,8 +1,7 @@
 package com.toyproject.payrecord.domain.employee.ui;
 
 import com.toyproject.payrecord.domain.employee.application.EmpService;
-import com.toyproject.payrecord.domain.employee.domain.Employee;
-import com.toyproject.payrecord.dto.SingUpRequest;
+import com.toyproject.payrecord.domain.employee.application.dto.SignUpRequest;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,7 @@ public class EmpController {
     private final EmpService empService;
 
     @PostMapping("/employees")
-    public ResponseEntity<?> singUp(@Valid @RequestBody SingUpRequest res) throws URISyntaxException {
+    public ResponseEntity<?> singUp(@Valid @RequestBody SignUpRequest res) throws URISyntaxException {
         String email = res.getEmail();
         String password = res.getPassword();
         Long empyId = empService.singUp(email, password);

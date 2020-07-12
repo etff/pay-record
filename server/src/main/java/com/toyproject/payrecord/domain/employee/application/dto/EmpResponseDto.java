@@ -1,4 +1,4 @@
-package com.toyproject.payrecord.domain.employee.application;
+package com.toyproject.payrecord.domain.employee.application.dto;
 
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import lombok.AllArgsConstructor;

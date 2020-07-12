@@ -24,6 +24,9 @@ public class Company extends BaseEntity {
     @Embedded
     private Address address;
 
+    @Column(name = "company_name")
+    private String name;
+
     @OneToOne(mappedBy = "company", fetch = LAZY)
     private Employee employee;
 }

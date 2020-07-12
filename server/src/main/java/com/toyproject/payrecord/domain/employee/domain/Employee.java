@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -41,7 +42,7 @@ public class Employee extends BaseEntity {
     private Company company;
 
     public Employee(String email, String password) {
-        this(email,password, null);
+        this(email, password,null);
     }
 
     public Employee(String email, String password, String fcmToken) {
@@ -54,6 +55,10 @@ public class Employee extends BaseEntity {
     private void validate(String email, String password) {
         StringUtil.validateEmail(email);
         StringUtil.validatePassword(password);
+    }
+
+    public void updateCompany(Company company) {
+        this.company = company;
     }
 
 }

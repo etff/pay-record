@@ -3,13 +3,12 @@ package com.toyproject.payrecord.domain.employee.ui;
 import com.toyproject.payrecord.domain.employee.application.EmpService;
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import com.toyproject.payrecord.dto.SingUpRequest;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -31,5 +30,18 @@ public class EmpController {
 
         URI location = new URI("/api/employees/" + empyId);
         return ResponseEntity.created(location).body("{}");
+    }
+
+    @PatchMapping("/employees/company")
+    public ResponseEntity<?> updateCompany(
+            Authentication authentication,
+            @PathVariable("companyId") Long companyId
+    ) {
+        Claims claims = (Claims) authentication.getPrincipal();
+
+        Long empId = claims.get("empId", Long.class);
+        empService.updateCompany(empId, companyId);
+
+        return ResponseEntity.ok("{}");
     }
 }

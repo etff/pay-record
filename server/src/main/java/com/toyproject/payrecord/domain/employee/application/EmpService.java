@@ -1,5 +1,8 @@
 package com.toyproject.payrecord.domain.employee.application;
 
+import com.toyproject.payrecord.domain.company.application.CompanyNotExistedException;
+import com.toyproject.payrecord.domain.company.domain.Company;
+import com.toyproject.payrecord.domain.company.domain.CompanyRepository;
 import com.toyproject.payrecord.domain.employee.domain.EmpRepository;
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import java.util.Optional;
 public class EmpService {
 
     private final EmpRepository empRepository;
+    private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Long singUp(String email, String password) {
@@ -38,5 +42,15 @@ public class EmpService {
         }
 
         return EmpResponseDto.of(employee);
+    }
+
+    public void updateCompany(Long empId, Long companyId) {
+        Employee findEmployee = empRepository.findById(empId)
+                .orElseThrow(EmailNotExistedException::new);
+
+        Company findCompany = companyRepository.findById(companyId)
+                .orElseThrow(CompanyNotExistedException::new);
+
+        findEmployee.updateCompany(findCompany);
     }
 }

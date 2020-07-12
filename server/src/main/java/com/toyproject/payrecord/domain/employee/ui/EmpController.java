@@ -27,9 +27,9 @@ public class EmpController {
     public ResponseEntity<?> singUp(@Valid @RequestBody SingUpRequest res) throws URISyntaxException {
         String email = res.getEmail();
         String password = res.getPassword();
-        Employee emp = empService.singUp(email, password);
+        Long empyId = empService.singUp(email, password);
 
-        URI location = new URI("/api/employees/" + emp.getId());
+        URI location = new URI("/api/employees/" + empyId);
         return ResponseEntity.created(location).body("{}");
     }
 }

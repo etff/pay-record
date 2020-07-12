@@ -17,7 +17,7 @@ public class EmpService {
     private final EmpRepository empRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Employee singUp(String email, String password) {
+    public Long singUp(String email, String password) {
         Optional<Employee> existed = empRepository.findByEmail(email);
         if (existed.isPresent()) {
             throw new EmailExistedException(email);
@@ -25,7 +25,8 @@ public class EmpService {
         String encodedPassword = passwordEncoder.encode(password);
         Employee employee = new Employee(email, encodedPassword);
 
-        return empRepository.save(employee);
+        Employee saved = empRepository.save(employee);
+        return saved.getId();
     }
 
     public EmpResponseDto authenticate(String email, String password) {

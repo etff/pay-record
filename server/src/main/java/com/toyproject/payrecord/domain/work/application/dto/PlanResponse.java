@@ -22,12 +22,9 @@ public class PlanResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public PlanResponse(String date, int startTime, int endTime, Employee employee, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public PlanResponse(String date, int startTime, int endTime) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.employee = employee;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }

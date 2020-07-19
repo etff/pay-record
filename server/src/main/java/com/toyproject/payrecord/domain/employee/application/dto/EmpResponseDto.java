@@ -16,12 +16,13 @@ public class EmpResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedTime;
 
-    public static EmpResponseDto of(Employee employee) {
+    public static EmpResponseDto of(Employee employee, String token) {
         return new EmpResponseDto(
                 employee.getId(),
                 employee.getEmail(),
                 employee.getCreatedAt(),
-                employee.getUpdatedAt());
+                employee.getUpdatedAt()
+        );
     }
 
 }

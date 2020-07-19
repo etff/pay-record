@@ -1,11 +1,13 @@
 package com.toyproject.payrecord.config;
 
-import com.toyproject.payrecord.config.auth.filter.JwtAuthenticationFilter;
+import com.toyproject.payrecord.config.auth.jwt.JwtTokenFilterConfigurer;
+import com.toyproject.payrecord.config.auth.jwt.JwtTokenProvider;
 import com.toyproject.payrecord.global.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,9 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-
-import javax.servlet.Filter;
 
 @Configuration
 @EnableWebSecurity
@@ -25,38 +24,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${jwt.secret}")
     private String secret;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        Filter filter = new JwtAuthenticationFilter(
-                authenticationManager(), jwtUtil());
 
         http
                 .cors()
-                    .disable()
+                .disable()
                 .csrf()
-                    .disable()
+                .disable()
                 .formLogin()
-                    .disable()
+                .disable()
                 .headers().frameOptions()
-                    .disable()
+                .disable()
+                .and().
+                authorizeRequests()//
+                .antMatchers("/api/v1/employees").permitAll()//
+                .antMatchers("/api/v1/auth").permitAll()//
+                .antMatchers("/h2-console/**").permitAll()
+                .and().authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
-//                .authorizeRequests()
-//                    .antMatchers("/api/v1/auth").permitAll()
-//                    .antMatchers("/api/v1/employees").permitAll()
-//                    .antMatchers("/api/v1/hcheck").permitAll()
-//                    .anyRequest().permitAll()
-//                .and()
-                .addFilter(filter)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui",
-                "/swagger-resources", "/configuration/security",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**");
+        web.ignoring().antMatchers("/v2/api-docs")//
+                .antMatchers("/swagger-resources/**")//
+                .antMatchers("/swagger-ui.html")//
+                .antMatchers("/configuration/**")//
+                .antMatchers("/webjars/**")//
+                .antMatchers("/public")
+                .and()
+                .ignoring()
+                .antMatchers("/h2-console/**/**");
+        ;
     }
 
     @Bean
@@ -69,4 +77,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtUtil(secret);
     }
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }

@@ -1,5 +1,7 @@
 package com.toyproject.payrecord.domain.work.application;
 
+import com.toyproject.payrecord.domain.employee.domain.Employee;
+import com.toyproject.payrecord.domain.employee.domain.EmployeeRepository;
 import com.toyproject.payrecord.domain.work.application.dto.PlanRequest;
 import com.toyproject.payrecord.domain.work.application.dto.PlanResponse;
 import com.toyproject.payrecord.domain.work.domain.Day;
@@ -10,27 +12,28 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class DayService {
 
     private final DayRepository dayRepository;
+    private final EmployeeRepository employeeRepository;
     private int planStartHour;
     private int planStartMin;
     private int planEndHour;
     private int planEndMin;
 
-    public void createPlan(Long empId, PlanRequest resource) throws ParseException {
+    public void createPlan(String email, PlanRequest resource) throws ParseException {
         String date = resource.getDate();
+        Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
         int startTime = 0;
         int endTime = 0;
 
         startTime = getStartTime(resource);
         endTime = getEndTime(resource);
 
-        Day saveDay = Day.builder().dayId(new DayId(empId, date))
+        Day saveDay = Day.builder().dayId(new DayId(employee.getId(), date))
                 .startTime(startTime)
                 .endTime(endTime)
                 .build();
@@ -54,8 +57,10 @@ public class DayService {
         return planEndHour + planEndMin;
     }
 
-    public PlanResponse getPlanByEmployeeId(Long empId, String date) {
-        DayId dayId = new DayId(empId, date);
+    public PlanResponse getPlanByEmail(String email, String date) {
+        Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+        DayId dayId = new DayId(employee.getId(), date);
+
         Day day = dayRepository.findById(dayId).orElseThrow(IllegalArgumentException::new);
         return PlanResponse.builder()
                 .date(date)

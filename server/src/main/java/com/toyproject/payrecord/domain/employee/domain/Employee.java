@@ -7,9 +7,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -41,15 +41,14 @@ public class Employee extends BaseEntity {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    public Employee(String email, String password) {
-        this(email, password,null);
-    }
+    @ApiModelProperty(value = "ROLE", required = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    List<Role> roles;
 
-    public Employee(String email, String password, String fcmToken) {
+    public Employee(String email, String password) {
         validate(email, password);
         this.email = email;
         this.password = password;
-        this.fcmToken = fcmToken == null ? null : fcmToken;
     }
 
     private void validate(String email, String password) {

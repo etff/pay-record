@@ -3,10 +3,10 @@ package com.toyproject.payrecord.domain.work;
 import com.toyproject.payrecord.domain.work.application.DayService;
 import com.toyproject.payrecord.domain.work.application.dto.PlanRequest;
 import com.toyproject.payrecord.domain.work.application.dto.PlanResponse;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,7 +18,6 @@ import java.text.ParseException;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class WorkController {
-
     private final DayService dayService;
 
     @PostMapping("/plans")
@@ -26,15 +25,14 @@ public class WorkController {
             Authentication authentication,
             @Valid @RequestBody PlanRequest resource
     ) throws ParseException, URISyntaxException {
-        Claims claims = (Claims) authentication.getPrincipal();
-        if (claims == null) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        if (userDetails == null) {
             return ResponseEntity.badRequest().body("token error");
         }
-        Long empId = claims.get("empId", Long.class);
+        dayService.createPlan(userDetails.getUsername(), resource);
 
-        dayService.createPlan(empId, resource);
-
-        String url = "/plan/" + empId + "/" + resource.getDate();
+        String url = "/plan/" + userDetails.getUsername() + "/" + resource.getDate();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 
@@ -43,13 +41,14 @@ public class WorkController {
             Authentication authentication,
             @PathVariable("date") String date
     ) throws ParseException {
-        Claims claims = (Claims) authentication.getPrincipal();
-        if (claims == null) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        if (userDetails == null) {
             return ResponseEntity.badRequest().body("token error");
         }
-        Long empId = claims.get("empId", Long.class);
+        String email = userDetails.getUsername();
 
-        PlanResponse plan = dayService.getPlanByEmployeeId(empId, date);
+        PlanResponse plan = dayService.getPlanByEmail(email, date);
 
         return ResponseEntity.ok(plan);
     }

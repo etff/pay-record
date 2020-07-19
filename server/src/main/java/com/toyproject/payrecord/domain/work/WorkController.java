@@ -1,14 +1,14 @@
 package com.toyproject.payrecord.domain.work;
 
-import com.toyproject.payrecord.domain.employee.application.dto.SignUpRequest;
 import com.toyproject.payrecord.domain.work.application.DayService;
-import com.toyproject.payrecord.domain.work.application.dto.DayPlanRequest;
+import com.toyproject.payrecord.domain.work.application.dto.PlanRequest;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 
 @RestController
@@ -21,7 +21,7 @@ public class WorkController {
     @PostMapping("/plans")
     public ResponseEntity<?> creatPlan(
             Authentication authentication,
-            @RequestBody DayPlanRequest resource
+            @Valid @RequestBody PlanRequest resource
     ) throws ParseException {
         Claims claims = (Claims) authentication.getPrincipal();
         if (claims == null) {

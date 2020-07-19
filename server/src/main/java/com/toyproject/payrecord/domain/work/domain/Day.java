@@ -17,6 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "day")
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Day {
@@ -30,17 +31,17 @@ public class Day {
     private Employee employee;
 
     @ApiModelProperty(value = "계획시작시간", required = false)
-    private String startTime;
+    private int startTime;
     @ApiModelProperty(value = "계획종료시간", required = false)
-    private String endTime;
+    private int endTime;
 
     @ApiModelProperty(value = "지각여부", required = false)
     private boolean isLate;
 
     @ApiModelProperty(value = "근무실제시작시간", required = false)
-    private String workStartTime;
+    private int workStartTime;
     @ApiModelProperty(value = "근무실제종료시간", required = false)
-    private String workEndTime;
+    private int workEndTime;
 
     @ApiModelProperty(value = "계획시간", required = false)
     private int planTime;

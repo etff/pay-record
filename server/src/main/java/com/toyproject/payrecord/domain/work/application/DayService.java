@@ -20,11 +20,9 @@ public class DayService {
         // 202007120900
         String date = resource.getDate();
 
-        Day day = Day.builder()
-                .dayId(new DayId(empId, date))
-                .startTime(resource.getStartTime())
-                .endTime(resource.getEndTime()).build();
+        //Day day = new Day(new DayId(empId, date), resource.getStartTime(), resource.getEndTime());
 
-        dayRepository.save(day);
+
+        //dayRepository.save(day);
     }
 }

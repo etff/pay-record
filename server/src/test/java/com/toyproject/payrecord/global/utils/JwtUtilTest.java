@@ -26,7 +26,7 @@ class JwtUtilTest {
 
         JwtUtil jwtUtil = new JwtUtil(SECRET);
 
-        String token = jwtUtil.createToken("abc@abc.com");
+        String token = jwtUtil.createToken(1L,"abc@abc.com");
 
         assertThat(token, containsString("."));
     }

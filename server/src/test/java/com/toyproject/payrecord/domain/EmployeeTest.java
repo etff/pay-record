@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class EmployeeTest {
 
-    private String email;
     private String password;
     private String fcmToken;
 

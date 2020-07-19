@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class SignUpRequest {
     @Email
     private String email;
 
+    @Length(min = 4, max = 15)
     private String password;
 
 }

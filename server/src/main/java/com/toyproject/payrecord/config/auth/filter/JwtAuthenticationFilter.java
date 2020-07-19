@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
-
     private JwtUtil jwtUtil;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
@@ -25,34 +24,19 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         this.jwtUtil = jwtUtil;
     }
 
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        String token = request.getHeader("Authorization");
         Authentication authentication = getAuthentication(request);
 
-        if (authentication != null && jwtUtil.validateToken(token, getContextUserName())) {
+        if (authentication != null) {
 
             SecurityContext context = SecurityContextHolder.getContext();
             context.setAuthentication(authentication);
         }
 
         chain.doFilter(request, response);
-    }
-
-    private String getContextUserName() {
-        String username = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-        return username;
     }
 
     private Authentication getAuthentication(HttpServletRequest request) {

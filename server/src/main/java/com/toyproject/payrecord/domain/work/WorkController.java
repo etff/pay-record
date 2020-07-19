@@ -18,6 +18,7 @@ public class WorkController {
 
     private final DayService dayService;
 
+    @PostMapping("/plans")
     public ResponseEntity<?> creatPlan(
             Authentication authentication,
             @RequestBody DayPlanRequest resource
@@ -32,4 +33,6 @@ public class WorkController {
 
         return ResponseEntity.ok("{}");
     }
+
+
 }

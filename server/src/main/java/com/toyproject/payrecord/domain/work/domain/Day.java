@@ -3,10 +3,7 @@ package com.toyproject.payrecord.domain.work.domain;
 
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -19,8 +16,8 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "day")
-@Builder
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Day {
 
@@ -60,5 +57,6 @@ public class Day {
 
     @OneToMany(mappedBy = "day", cascade = CascadeType.ALL)
     private List<Timeline> timelines = new ArrayList<>();
+
 
 }

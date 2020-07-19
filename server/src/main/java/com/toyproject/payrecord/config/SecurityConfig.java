@@ -40,19 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions()
                     .disable()
                 .and()
-                .authorizeRequests()
-                    .antMatchers("/api/v1/auth").permitAll()
-                    .antMatchers("/api/v1/employees").permitAll()
-                    .antMatchers("/api/v1/hcheck").permitAll()
-                    .anyRequest().permitAll()
-                .and()
+//                .authorizeRequests()
+//                    .antMatchers("/api/v1/auth").permitAll()
+//                    .antMatchers("/api/v1/employees").permitAll()
+//                    .antMatchers("/api/v1/hcheck").permitAll()
+//                    .anyRequest().permitAll()
+//                .and()
                 .addFilter(filter)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
-
     public void configure(WebSecurity web) throws Exception {
 
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui",

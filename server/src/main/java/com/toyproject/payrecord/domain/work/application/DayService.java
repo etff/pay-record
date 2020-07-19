@@ -1,6 +1,7 @@
 package com.toyproject.payrecord.domain.work.application;
 
 import com.toyproject.payrecord.domain.work.application.dto.PlanRequest;
+import com.toyproject.payrecord.domain.work.application.dto.PlanResponse;
 import com.toyproject.payrecord.domain.work.domain.Day;
 import com.toyproject.payrecord.domain.work.domain.DayId;
 import com.toyproject.payrecord.domain.work.domain.DayRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +52,15 @@ public class DayService {
             planEndMin = Integer.parseUnsignedInt(resource.getEndTime().substring(2, 4));
         }
         return planEndHour + planEndMin;
+    }
+
+    public PlanResponse getPlanByEmployeeId(Long empId, String date) {
+        DayId dayId = new DayId(empId, date);
+        Day day = dayRepository.findById(dayId).orElseThrow(IllegalArgumentException::new);
+        return PlanResponse.builder()
+                .date(date)
+                .startTime(day.getStartTime())
+                .endTime(day.getEndTime())
+                .build();
     }
 }

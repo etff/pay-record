@@ -1,6 +1,7 @@
 package com.toyproject.payrecord.domain.work.domain;
 
 
+import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.domain.employee.domain.Employee;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -20,7 +21,7 @@ import static javax.persistence.FetchType.LAZY;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Day {
+public class Day extends BaseEntity {
 
     @EmbeddedId
     private DayId dayId;

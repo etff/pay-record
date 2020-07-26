@@ -2,7 +2,6 @@ package com.toyproject.payrecord.config;
 
 import com.toyproject.payrecord.config.auth.jwt.JwtTokenFilterConfigurer;
 import com.toyproject.payrecord.config.auth.jwt.JwtTokenProvider;
-import com.toyproject.payrecord.global.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -71,12 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public JwtUtil jwtUtil() {
-        return new JwtUtil(secret);
-    }
-
+    
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

@@ -63,11 +63,11 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + EXPIRE_TIME);
 
-        return Jwts.builder()//
-                .setClaims(claims)//
+        return Jwts.builder()
+                .setClaims(claims)
                 .setIssuer(ISSUER)
-                .setIssuedAt(now)//
-                .setExpiration(validity)//
+                .setIssuedAt(now)
+                .setExpiration(validity)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }

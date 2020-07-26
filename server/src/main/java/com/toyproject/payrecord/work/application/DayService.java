@@ -10,6 +10,7 @@ import com.toyproject.payrecord.work.ui.dto.PlanRequest;
 import com.toyproject.payrecord.work.ui.dto.PlanResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +43,7 @@ public class DayService {
         return TimeUtil.ParseToIntHour(resource.getEndTime());
     }
 
+    @Transactional(readOnly = true)
     public PlanResponse getPlanByEmail(String email, String date) {
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
         DayId dayId = new DayId(employee.getId(), date);

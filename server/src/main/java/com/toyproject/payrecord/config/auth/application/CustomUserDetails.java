@@ -21,14 +21,14 @@ public class CustomUserDetails {
             throw new UsernameNotFoundException("user(email) name doesn't exist");
         }
 
-        return org.springframework.security.core.userdetails.User//
-                .withUsername(email)//
-                .password(employee.getPassword())//
-                .authorities(employee.getRoles())//
-                .accountExpired(false)//
-                .accountLocked(false)//
-                .credentialsExpired(false)//
-                .disabled(false)//
+        return org.springframework.security.core.userdetails.User
+                .withUsername(email)
+                .password(employee.getPassword())
+                .authorities(employee.getRoles())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
                 .build();
     }
 }

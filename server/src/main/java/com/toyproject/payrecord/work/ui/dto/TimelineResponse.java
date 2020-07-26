@@ -1,14 +1,16 @@
 package com.toyproject.payrecord.work.ui.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class TimelineResponse {
+    private Long id;
     private String event;
+    private String createdAt;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime createdAt;
+    public TimelineResponse(Long id, String event, String createdAt) {
+        this.id = id;
+        this.event = event;
+        this.createdAt = createdAt;
+    }
 }

@@ -29,8 +29,8 @@ public class Timeline extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @Setter
     @JoinColumns({
-            @JoinColumn(name = "employee_id"),
-            @JoinColumn(name = "date")
+            @JoinColumn(name = "date"),
+            @JoinColumn(name = "employee_id")
     })
     private Day day;
 
@@ -40,4 +40,13 @@ public class Timeline extends BaseEntity {
         }
         this.event = event;
     }
+
+    public Timeline(Day day, String event) {
+        if (StringUtil.isBlank(event)) {
+            throw new IllegalArgumentException(NULL_NOT_ALLOW);
+        }
+        this.day = day;
+        this.event = event;
+    }
+
 }

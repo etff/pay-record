@@ -10,7 +10,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Embeddable
 @NoArgsConstructor
-@AllArgsConstructor
 public class DayId implements Serializable {
 
     @Column(name = "employee_id")
@@ -18,4 +17,9 @@ public class DayId implements Serializable {
 
     @Column(name = "date")
     private String date;
+
+    public DayId(Long employeeId, String date) {
+        this.employeeId = employeeId;
+        this.date = date;
+    }
 }

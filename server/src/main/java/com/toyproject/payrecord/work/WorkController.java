@@ -1,8 +1,10 @@
 package com.toyproject.payrecord.work;
 
 import com.toyproject.payrecord.work.application.DayService;
+import com.toyproject.payrecord.work.application.TimelineService;
 import com.toyproject.payrecord.work.ui.dto.PlanRequest;
 import com.toyproject.payrecord.work.ui.dto.PlanResponse;
+import com.toyproject.payrecord.work.ui.dto.TimelineResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,7 @@ import java.text.ParseException;
 @RequestMapping("/api/v1")
 public class WorkController {
     private final DayService dayService;
+    private final TimelineService timelineService;
 
     @PostMapping("/plans")
     public ResponseEntity<?> creatPlan(
@@ -47,12 +50,12 @@ public class WorkController {
     @PostMapping("/timelines/start")
     public ResponseEntity<?> startWork(
             Authentication authentication
-    ) throws ParseException {
+    ) throws ParseException, URISyntaxException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        PlanResponse plan = dayService.getPlanByEmail(userDetails.getUsername(), date);
-
-        return ResponseEntity.ok(plan);
+        String event = "근무시작";
+        TimelineResponse saved = timelineService.save(userDetails.getUsername(), event);
+        String url = "/timelines/" + saved.getId();
+        return ResponseEntity.created(new URI(url)).body("{}");
     }
 
 

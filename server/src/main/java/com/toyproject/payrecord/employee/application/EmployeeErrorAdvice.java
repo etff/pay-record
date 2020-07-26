@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @ControllerAdvice
-public class EmpErrorAdvice {
+public class EmployeeErrorAdvice {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)

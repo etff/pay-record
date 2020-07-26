@@ -1,6 +1,6 @@
 package com.toyproject.payrecord.employee.ui;
 
-import com.toyproject.payrecord.employee.application.EmpService;
+import com.toyproject.payrecord.employee.application.EmployeeService;
 import com.toyproject.payrecord.employee.ui.dto.SignUpRequest;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
@@ -17,15 +17,15 @@ import java.net.URISyntaxException;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @Api(tags = "사용자 APIs")
-public class EmpController {
+public class EmployeeController {
 
-    private final EmpService empService;
+    private final EmployeeService employeeService;
 
     @PostMapping("/employees")
     public ResponseEntity<?> singUp(@Valid @RequestBody SignUpRequest res) throws URISyntaxException {
         String email = res.getEmail();
         String password = res.getPassword();
-        Long empyId = empService.singUp(email, password);
+        Long empyId = employeeService.singUp(email, password);
 
         URI location = new URI("/api/employees/" + empyId);
         return ResponseEntity.created(location).body("{}");
@@ -39,7 +39,7 @@ public class EmpController {
         Claims claims = (Claims) authentication.getPrincipal();
 
         Long empId = claims.get("empId", Long.class);
-        empService.updateCompany(empId, companyId);
+        employeeService.updateCompany(empId, companyId);
 
         return ResponseEntity.ok("{}");
     }

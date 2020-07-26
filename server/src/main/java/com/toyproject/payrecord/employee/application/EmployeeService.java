@@ -1,16 +1,15 @@
 package com.toyproject.payrecord.employee.application;
 
-import com.toyproject.payrecord.config.auth.jwt.JwtTokenProvider;
 import com.toyproject.payrecord.company.application.CompanyNotExistedException;
 import com.toyproject.payrecord.company.domain.Company;
 import com.toyproject.payrecord.company.domain.CompanyRepository;
+import com.toyproject.payrecord.config.auth.jwt.JwtTokenProvider;
 import com.toyproject.payrecord.employee.application.exception.EmailExistedException;
 import com.toyproject.payrecord.employee.application.exception.EmailNotExistedException;
 import com.toyproject.payrecord.employee.application.exception.PasswordWrongException;
-import com.toyproject.payrecord.employee.domain.EmployeeRepository;
 import com.toyproject.payrecord.employee.domain.Employee;
+import com.toyproject.payrecord.employee.domain.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,14 +20,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class EmpService {
+public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final AuthenticationManager authenticationManager;
-
 
     public Long singUp(String email, String password) {
         Optional<Employee> existed = employeeRepository.findByEmail(email);

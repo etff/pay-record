@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmpResponseDto {
+public class EmployeeResponse {
     private Long id;
     private String email;
     private LocalDateTime createdAt;
     private LocalDateTime updatedTime;
 
-    public static EmpResponseDto of(Employee employee, String token) {
-        return new EmpResponseDto(
+    public static EmployeeResponse of(Employee employee, String token) {
+        return new EmployeeResponse(
                 employee.getId(),
                 employee.getEmail(),
                 employee.getCreatedAt(),

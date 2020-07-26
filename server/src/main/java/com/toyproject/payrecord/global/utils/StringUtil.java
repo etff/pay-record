@@ -57,12 +57,8 @@ public class StringUtil {
     }
 
     public static void validatePassword(final String password) {
-        if (!isBlank(password)) {
-            int passwordLength = password.trim().length();
-
-//            if (checkNameRange(passwordLength)) {
-//                throw new IllegalArgumentException(PASSWORD_LENGTH_ERROR);
-//            }
+        if (isBlank(password)) {
+            throw new IllegalArgumentException(NULL_NOT_ALLOW);
         }
     }
 

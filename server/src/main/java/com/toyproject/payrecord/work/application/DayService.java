@@ -2,6 +2,7 @@ package com.toyproject.payrecord.work.application;
 
 import com.toyproject.payrecord.employee.domain.Employee;
 import com.toyproject.payrecord.employee.domain.EmployeeRepository;
+import com.toyproject.payrecord.global.utils.TimeUtil;
 import com.toyproject.payrecord.work.domain.Day;
 import com.toyproject.payrecord.work.domain.DayRepository;
 import com.toyproject.payrecord.work.domain.keys.DayId;
@@ -10,21 +11,13 @@ import com.toyproject.payrecord.work.ui.dto.PlanResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 public class DayService {
-
     private final DayRepository dayRepository;
     private final EmployeeRepository employeeRepository;
-    private int planStartHour;
-    private int planStartMin;
-    private int planEndHour;
-    private int planEndMin;
 
-    public void createPlan(String email, PlanRequest resource) throws ParseException {
+    public void createPlan(String email, PlanRequest resource){
         String date = resource.getDate();
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
         int startTime = 0;
@@ -42,19 +35,11 @@ public class DayService {
     }
 
     private int getStartTime(PlanRequest resource) {
-        if (Objects.nonNull(resource.getStartTime())) {
-            planStartHour = Integer.parseUnsignedInt(resource.getStartTime().substring(0, 2)) * 60;
-            planStartMin = Integer.parseUnsignedInt(resource.getStartTime().substring(2, 4));
-        }
-        return planStartHour + planStartMin;
+        return TimeUtil.ParseToIntHour(resource.getStartTime());
     }
 
     private int getEndTime(PlanRequest resource) {
-        if (Objects.nonNull(resource.getEndTime())) {
-            planEndHour = Integer.parseUnsignedInt(resource.getEndTime().substring(0, 2)) * 60;
-            planEndMin = Integer.parseUnsignedInt(resource.getEndTime().substring(2, 4));
-        }
-        return planEndHour + planEndMin;
+        return TimeUtil.ParseToIntHour(resource.getEndTime());
     }
 
     public PlanResponse getPlanByEmail(String email, String date) {

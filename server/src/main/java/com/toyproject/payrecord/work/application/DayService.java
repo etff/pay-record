@@ -5,7 +5,10 @@ import com.toyproject.payrecord.employee.domain.EmployeeRepository;
 import com.toyproject.payrecord.global.utils.TimeUtil;
 import com.toyproject.payrecord.work.domain.Day;
 import com.toyproject.payrecord.work.domain.DayRepository;
+import com.toyproject.payrecord.work.domain.Month;
+import com.toyproject.payrecord.work.domain.MonthRepository;
 import com.toyproject.payrecord.work.domain.keys.DayId;
+import com.toyproject.payrecord.work.domain.keys.MonthId;
 import com.toyproject.payrecord.work.ui.dto.PlanRequest;
 import com.toyproject.payrecord.work.ui.dto.PlanResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ public class DayService {
 
     private final DayRepository dayRepository;
     private final EmployeeRepository employeeRepository;
+    private final MonthRepository monthRepository;
 
     public void createPlan(String email, PlanRequest resource) {
         String date = resource.getDate();
@@ -34,6 +38,7 @@ public class DayService {
                                 TIME_PER_PAY);
 
         dayRepository.save(saveDay);
+        monthRepository.save(new Month(new MonthId(employee.getId(), date)));
     }
 
     private int getStartTime(PlanRequest resource) {

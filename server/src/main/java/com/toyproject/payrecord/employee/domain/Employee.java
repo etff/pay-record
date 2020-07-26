@@ -33,11 +33,6 @@ public class Employee extends BaseEntity {
     @Column(name = "password", length = 255, nullable = true)
     private String password;
 
-    @ApiModelProperty(value = "fcm토큰", required = false)
-    @Column(name = "fcm_token", length = 255, nullable = true)
-    @Transient
-    private String fcmToken;
-
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "company_id")
     private Company company;

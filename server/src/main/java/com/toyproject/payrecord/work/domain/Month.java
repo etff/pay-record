@@ -22,4 +22,7 @@ public class Month {
     @MapsId("employee_id")
     private Employee employee;
 
+    public Month(MonthId monthId) {
+        this.monthId = monthId;
+    }
 }

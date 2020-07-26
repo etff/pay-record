@@ -69,6 +69,7 @@ public class Day extends BaseEntity {
         this.endTime = endTime;
         this.timePay = timePay;
         this.planTime = endTime - startTime;
+        this.month = dayId.getDate().substring(0, 6);
     }
 
     private void validate(int startTime, int endTime, int timePay) {

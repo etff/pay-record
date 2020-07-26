@@ -21,8 +21,6 @@ public class PlanResponse {
     private String date;
     private int startTime;
     private int endTime;
-    private int workStartTime;
-    private int workEndTime;
     private String email;
     private List<TimelineDto> timelines;
     private Long remainTimePercent;

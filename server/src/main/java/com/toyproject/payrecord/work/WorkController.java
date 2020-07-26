@@ -26,10 +26,6 @@ public class WorkController {
             @Valid @RequestBody PlanRequest resource
     ) throws ParseException, URISyntaxException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        if (userDetails == null) {
-            return ResponseEntity.badRequest().body("token error");
-        }
         dayService.createPlan(userDetails.getUsername(), resource);
 
         String url = "/plan/" + userDetails.getUsername() + "/" + resource.getDate();
@@ -43,12 +39,7 @@ public class WorkController {
     ) throws ParseException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        if (userDetails == null) {
-            return ResponseEntity.badRequest().body("token error");
-        }
-        String email = userDetails.getUsername();
-
-        PlanResponse plan = dayService.getPlanByEmail(email, date);
+        PlanResponse plan = dayService.getPlanByEmail(userDetails.getUsername(), date);
 
         return ResponseEntity.ok(plan);
     }

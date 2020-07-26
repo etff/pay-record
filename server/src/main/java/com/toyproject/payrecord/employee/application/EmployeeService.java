@@ -21,7 +21,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class EmpService {
+public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final CompanyRepository companyRepository;

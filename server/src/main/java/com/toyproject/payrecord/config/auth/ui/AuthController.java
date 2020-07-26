@@ -2,7 +2,7 @@ package com.toyproject.payrecord.config.auth.ui;
 
 import com.toyproject.payrecord.config.auth.ui.dto.AuthRequest;
 import com.toyproject.payrecord.config.auth.ui.dto.AuthResponse;
-import com.toyproject.payrecord.employee.application.EmpService;
+import com.toyproject.payrecord.employee.application.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final EmpService empService;
+    private final EmployeeService employeeService;
 
     @PostMapping("/auth")
     public ResponseEntity<AuthResponse> create(
@@ -28,7 +28,7 @@ public class AuthController {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
-        String accessToken = empService.authenticate(email, password);
+        String accessToken = employeeService.authenticate(email, password);
 
         String url = "/auth";
 

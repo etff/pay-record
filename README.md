@@ -17,7 +17,12 @@
 
 ## 사용 기술 및 환경
 
-Spring boot, Gradle, Jpa, MariaDB, Java8, Spring Security JWT, Rest API(Springfox-swagger-ui)
+- Spring boot
+- Gradle Jpa
+- MariaDB
+- Java8
+- Spring Security JWT
+- Rest API(Springfox-swagger-ui)
 
 ## 화면 설계
 

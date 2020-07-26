@@ -10,6 +10,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +63,22 @@ public class Day extends BaseEntity {
     private List<Timeline> timelines = new ArrayList<>();
 
     public void addEvent(Timeline timeline) {
+        /**
+         * 연관관계 맵핑
+         */
         timelines.add(timeline);
         timeline.setDay(this);
+        setWorkTime(timeline);
+    }
+
+    private void setWorkTime(Timeline timeline) {
+        if (WorkType.of(timeline.getEvent()).equals(WorkType.START)) {
+            this.workStartTime = LocalDateTime.now().getHour() * 60 + LocalDateTime.now().getMinute();
+        }
+
+        if (WorkType.of(timeline.getEvent()).equals(WorkType.END)) {
+            this.workEndTime = LocalDateTime.now().getHour() * 60 + LocalDateTime.now().getMinute();
+        }
     }
 
 }

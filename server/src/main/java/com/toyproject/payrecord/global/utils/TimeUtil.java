@@ -7,7 +7,7 @@ public class TimeUtil {
     private TimeUtil() {
     }
 
-    public static int ParseToIntHour(String time) {
+    public static int ParseToIntTime(String time) {
         if (Objects.isNull(time) || time.isEmpty() || time.length() != 4) {
             throw new IllegalArgumentException();
         }

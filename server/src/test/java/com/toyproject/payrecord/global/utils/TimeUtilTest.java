@@ -15,7 +15,7 @@ class TimeUtilTest {
     @ValueSource(strings = {"090", "42", "99999", "-999"})
     void length(String time) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> TimeUtil.ParseToIntHour(time));
+                .isThrownBy(() -> TimeUtil.ParseToIntTime(time));
     }
 
     @DisplayName(value = "시간에 빈 문자열 또는 null 값을 입력할 경우, IllegalArgumentException 이 발생")
@@ -23,7 +23,7 @@ class TimeUtilTest {
     @NullAndEmptySource
     void emptyOrNull(final String time) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> TimeUtil.ParseToIntHour(time));
+                .isThrownBy(() -> TimeUtil.ParseToIntTime(time));
     }
 
     @Test
@@ -32,7 +32,7 @@ class TimeUtilTest {
         String time = "0930";
 
         // when
-        int expected = TimeUtil.ParseToIntHour(time);
+        int expected = TimeUtil.ParseToIntTime(time);
 
         // then
         assertThat(expected).isEqualTo(570);

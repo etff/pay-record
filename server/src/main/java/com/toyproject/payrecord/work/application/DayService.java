@@ -36,11 +36,11 @@ public class DayService {
     }
 
     private int getStartTime(PlanRequest resource) {
-        return TimeUtil.ParseToIntHour(resource.getStartTime());
+        return TimeUtil.ParseToIntTime(resource.getStartTime());
     }
 
     private int getEndTime(PlanRequest resource) {
-        return TimeUtil.ParseToIntHour(resource.getEndTime());
+        return TimeUtil.ParseToIntTime(resource.getEndTime());
     }
 
     @Transactional(readOnly = true)

@@ -2,6 +2,7 @@ package com.toyproject.payrecord.work;
 
 import com.toyproject.payrecord.work.application.DayService;
 import com.toyproject.payrecord.work.application.TimelineService;
+import com.toyproject.payrecord.work.domain.WorkType;
 import com.toyproject.payrecord.work.ui.dto.PlanRequest;
 import com.toyproject.payrecord.work.ui.dto.PlanResponse;
 import com.toyproject.payrecord.work.ui.dto.TimelineResponse;
@@ -47,13 +48,13 @@ public class WorkController {
         return ResponseEntity.ok(plan);
     }
 
-    @PostMapping("/timelines/start")
+    @PostMapping("/timelines/work")
     public ResponseEntity<?> startWork(
-            Authentication authentication
-    ) throws ParseException, URISyntaxException {
+            Authentication authentication,
+            @RequestParam WorkType workType
+            ) throws ParseException, URISyntaxException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String event = "근무시작";
-        TimelineResponse saved = timelineService.save(userDetails.getUsername(), event);
+        TimelineResponse saved = timelineService.save(userDetails.getUsername(), workType.getValue());
         String url = "/timelines/" + saved.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }

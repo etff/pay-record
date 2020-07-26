@@ -1,4 +1,4 @@
-package com.toyproject.payrecord.work.domain;
+package com.toyproject.payrecord.work.domain.keys;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

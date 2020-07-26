@@ -4,11 +4,14 @@ import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.global.utils.StringUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @Table(name = "timeline")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Timeline extends BaseEntity {
@@ -24,6 +27,7 @@ public class Timeline extends BaseEntity {
     private String event;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @Setter
     @JoinColumns({
             @JoinColumn(name = "employee_id"),
             @JoinColumn(name = "date")

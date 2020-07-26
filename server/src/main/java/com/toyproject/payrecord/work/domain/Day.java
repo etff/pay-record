@@ -61,5 +61,9 @@ public class Day extends BaseEntity {
     @OneToMany(mappedBy = "day", cascade = CascadeType.ALL)
     private List<Timeline> timelines = new ArrayList<>();
 
+    public void addEvent(Timeline timeline) {
+        timelines.add(timeline);
+        timeline.setDay(this);
+    }
 
 }

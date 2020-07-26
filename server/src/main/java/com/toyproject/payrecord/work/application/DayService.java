@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class DayService {
+    private static final int TIME_PER_PAY = 10_000;
+
     private final DayRepository dayRepository;
     private final EmployeeRepository employeeRepository;
 
-    public void createPlan(String email, PlanRequest resource){
+    public void createPlan(String email, PlanRequest resource) {
         String date = resource.getDate();
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
         int startTime = 0;
@@ -26,11 +28,10 @@ public class DayService {
 
         startTime = getStartTime(resource);
         endTime = getEndTime(resource);
-
-        Day saveDay = Day.builder().dayId(new DayId(employee.getId(), date))
-                .startTime(startTime)
-                .endTime(endTime)
-                .build();
+        Day saveDay = new Day(  new DayId(employee.getId(), date),
+                                startTime,
+                                endTime,
+                                TIME_PER_PAY);
 
         dayRepository.save(saveDay);
     }

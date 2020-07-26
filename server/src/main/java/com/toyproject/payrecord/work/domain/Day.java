@@ -62,6 +62,25 @@ public class Day extends BaseEntity {
     @OneToMany(mappedBy = "day", cascade = CascadeType.ALL)
     private List<Timeline> timelines = new ArrayList<>();
 
+    public Day(DayId dayId, int startTime, int endTime, int timePay) {
+        validate(startTime, endTime, timePay);
+        this.dayId = dayId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.timePay = timePay;
+        this.planTime = endTime - startTime;
+    }
+
+    private void validate(int startTime, int endTime, int timePay) {
+        if (startTime <= 0 || endTime <= 0 || timePay <= 0) {
+            throw new IllegalArgumentException("0보다 더 작은 값이 들어올 수 없습니다.");
+        }
+
+        if (endTime - startTime < 0) {
+            throw new IllegalArgumentException("시작 시간이 종료시간보다 클 수 없습니다.");
+        }
+    }
+
     public void addEvent(Timeline timeline) {
         /**
          * 연관관계 맵핑
@@ -72,13 +91,21 @@ public class Day extends BaseEntity {
     }
 
     private void setWorkTime(Timeline timeline) {
-        if (WorkType.of(timeline.getEvent()).equals(WorkType.START)) {
+        if (isStartWorkTime(timeline)) {
             this.workStartTime = LocalDateTime.now().getHour() * 60 + LocalDateTime.now().getMinute();
         }
 
-        if (WorkType.of(timeline.getEvent()).equals(WorkType.END)) {
+        if (isEndWorkTime(timeline)) {
             this.workEndTime = LocalDateTime.now().getHour() * 60 + LocalDateTime.now().getMinute();
         }
+    }
+
+    private boolean isStartWorkTime(Timeline timeline) {
+        return WorkType.of(timeline.getEvent()).equals(WorkType.START);
+    }
+
+    private boolean isEndWorkTime(Timeline timeline) {
+        return WorkType.of(timeline.getEvent()).equals(WorkType.END);
     }
 
 }

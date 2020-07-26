@@ -40,13 +40,4 @@ public class Timeline extends BaseEntity {
         }
         this.event = event;
     }
-
-    public Timeline(Day day, String event) {
-        if (StringUtil.isBlank(event)) {
-            throw new IllegalArgumentException(NULL_NOT_ALLOW);
-        }
-        this.day = day;
-        this.event = event;
-    }
-
 }

@@ -39,8 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .and().
                 authorizeRequests()//
-                .antMatchers("/api/v1/employees").permitAll()//
-                .antMatchers("/api/v1/auth").permitAll()//
+                .antMatchers("/api/v1/employees").permitAll()
+                .antMatchers("/api/v1/auth").permitAll()
+                .antMatchers("/api/hcheck").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .and().authorizeRequests()
                 .anyRequest().authenticated()
@@ -54,26 +55,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs")//
-                .antMatchers("/swagger-resources/**")//
-                .antMatchers("/swagger-ui.html")//
-                .antMatchers("/configuration/**")//
-                .antMatchers("/webjars/**")//
+        web.ignoring().antMatchers("/v2/api-docs")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/swagger-ui.html")
+                .antMatchers("/configuration/**")
+                .antMatchers("/webjars/**")
                 .antMatchers("/public")
                 .and()
                 .ignoring()
                 .antMatchers("/h2-console/**/**");
-        ;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+
 }

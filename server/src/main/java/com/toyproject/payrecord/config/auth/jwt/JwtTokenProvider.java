@@ -1,14 +1,13 @@
 package com.toyproject.payrecord.config.auth.jwt;
 
 import com.toyproject.payrecord.config.auth.application.CustomUserDetails;
-import com.toyproject.payrecord.config.auth.exception.CustomException;
-import com.toyproject.payrecord.domain.employee.domain.Role;
+import com.toyproject.payrecord.config.auth.application.exception.CustomException;
+import com.toyproject.payrecord.employee.domain.Role;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

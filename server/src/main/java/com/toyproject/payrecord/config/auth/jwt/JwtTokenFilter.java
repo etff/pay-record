@@ -1,6 +1,6 @@
 package com.toyproject.payrecord.config.auth.jwt;
 
-import com.toyproject.payrecord.config.auth.exception.CustomException;
+import com.toyproject.payrecord.config.auth.application.exception.CustomException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;

@@ -1,7 +1,7 @@
 package com.toyproject.payrecord.config.auth.application;
 
-import com.toyproject.payrecord.domain.employee.domain.Employee;
-import com.toyproject.payrecord.domain.employee.domain.EmployeeRepository;
+import com.toyproject.payrecord.employee.domain.Employee;
+import com.toyproject.payrecord.employee.domain.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

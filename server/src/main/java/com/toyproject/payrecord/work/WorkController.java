@@ -44,5 +44,17 @@ public class WorkController {
         return ResponseEntity.ok(plan);
     }
 
+    @PostMapping("/timelines/start")
+    public ResponseEntity<?> startWork(
+            Authentication authentication
+    ) throws ParseException {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        PlanResponse plan = dayService.getPlanByEmail(userDetails.getUsername(), date);
+
+        return ResponseEntity.ok(plan);
+    }
+
+
 
 }

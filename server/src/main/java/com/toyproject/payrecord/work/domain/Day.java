@@ -1,6 +1,7 @@
 package com.toyproject.payrecord.work.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.employee.domain.Employee;
 import com.toyproject.payrecord.work.domain.keys.DayId;

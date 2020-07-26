@@ -30,10 +30,8 @@ public class TimelineService {
 
         DayId dayId = new DayId(employee.getId(), time);
         Day day = dayRepository.findById(dayId).orElseThrow(() -> new IllegalArgumentException("계획이 존재해야 합니다."));
-
-        Timeline timeline = new Timeline(event);
-
-        Timeline saved = timelineRepository.save(timeline);
+        
+        Timeline saved = timelineRepository.save(new Timeline(event));
         day.addEvent(saved);
 
         return new TimelineResponse(saved.getId(), saved.getEvent(), time);

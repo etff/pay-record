@@ -1,5 +1,6 @@
 package com.toyproject.payrecord.employee.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.company.domain.Company;
 import com.toyproject.payrecord.global.utils.StringUtil;
@@ -31,6 +32,7 @@ public class Employee extends BaseEntity {
 
     @ApiModelProperty(hidden = true)
     @Column(name = "password", length = 255, nullable = true)
+    @JsonIgnore
     private String password;
 
     @OneToOne(fetch = LAZY)

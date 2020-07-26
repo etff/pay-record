@@ -11,9 +11,14 @@ import com.toyproject.payrecord.work.domain.keys.DayId;
 import com.toyproject.payrecord.work.domain.keys.MonthId;
 import com.toyproject.payrecord.work.ui.dto.PlanRequest;
 import com.toyproject.payrecord.work.ui.dto.PlanResponse;
+import com.toyproject.payrecord.work.ui.dto.TimelineDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -55,10 +60,11 @@ public class DayService {
         DayId dayId = new DayId(employee.getId(), date);
 
         Day day = dayRepository.findById(dayId).orElseThrow(IllegalArgumentException::new);
-        return PlanResponse.builder()
-                .date(date)
-                .startTime(day.getStartTime())
-                .endTime(day.getEndTime())
-                .build();
+
+        List<TimelineDto> timelineDtos = day.getTimelines().stream()
+                .map(t -> new TimelineDto(t.getId(), t.getEvent(), t.getCreatedAt(), t.getUpdatedAt()))
+                .collect(toList());
+
+        return new PlanResponse(day, timelineDtos);
     }
 }

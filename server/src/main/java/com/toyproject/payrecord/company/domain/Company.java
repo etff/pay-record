@@ -5,6 +5,7 @@ import com.toyproject.payrecord.employee.domain.Employee;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -28,5 +29,6 @@ public class Company extends BaseEntity {
     private String name;
 
     @OneToOne(mappedBy = "company", fetch = LAZY)
+    @Setter
     private Employee employee;
 }

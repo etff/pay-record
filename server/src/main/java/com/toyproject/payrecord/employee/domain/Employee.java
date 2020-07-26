@@ -1,5 +1,6 @@
 package com.toyproject.payrecord.employee.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.company.domain.Company;
 import com.toyproject.payrecord.global.utils.StringUtil;
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,12 +32,8 @@ public class Employee extends BaseEntity {
 
     @ApiModelProperty(hidden = true)
     @Column(name = "password", length = 255, nullable = true)
+    @JsonIgnore
     private String password;
-
-    @ApiModelProperty(value = "fcm토큰", required = false)
-    @Column(name = "fcm_token", length = 255, nullable = true)
-    @Transient
-    private String fcmToken;
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "company_id")
@@ -58,6 +56,6 @@ public class Employee extends BaseEntity {
 
     public void updateCompany(Company company) {
         this.company = company;
+        company.setEmployee(this);
     }
-
 }

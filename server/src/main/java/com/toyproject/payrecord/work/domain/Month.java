@@ -1,6 +1,7 @@
 package com.toyproject.payrecord.work.domain;
 
 import com.toyproject.payrecord.employee.domain.Employee;
+import com.toyproject.payrecord.work.domain.keys.MonthId;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,7 @@ public class Month {
     @MapsId("employee_id")
     private Employee employee;
 
+    public Month(MonthId monthId) {
+        this.monthId = monthId;
+    }
 }

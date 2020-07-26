@@ -37,21 +37,11 @@ public class DayService {
 
         startTime = getStartTime(resource);
         endTime = getEndTime(resource);
-        Day saveDay = new Day(  new DayId(employee.getId(), date),
-                                startTime,
-                                endTime,
-                                TIME_PER_PAY);
 
+        Day saveDay = new Day(new DayId(employee.getId(), date), startTime, endTime, TIME_PER_PAY);
+        
         dayRepository.save(saveDay);
         monthRepository.save(new Month(new MonthId(employee.getId(), date)));
-    }
-
-    private int getStartTime(PlanRequest resource) {
-        return TimeUtil.ParseToIntTime(resource.getStartTime());
-    }
-
-    private int getEndTime(PlanRequest resource) {
-        return TimeUtil.ParseToIntTime(resource.getEndTime());
     }
 
     @Transactional(readOnly = true)
@@ -66,5 +56,13 @@ public class DayService {
                 .collect(toList());
 
         return new PlanResponse(day, timelineDtos);
+    }
+
+    private int getStartTime(PlanRequest resource) {
+        return TimeUtil.ParseToIntTime(resource.getStartTime());
+    }
+
+    private int getEndTime(PlanRequest resource) {
+        return TimeUtil.ParseToIntTime(resource.getEndTime());
     }
 }

@@ -17,13 +17,13 @@
 
 ## 사용 기술 및 환경
 
-Spring boot, Gradle, Jpa, MariaDB, Java8, JWT
+Spring boot, Gradle, Jpa, MariaDB, Java8, Spring Security JWT, Rest API(Springfox-swagger-ui)
 
 ## 화면 설계
 
 https://ovenapp.io/view/Dm3b4wjnAwtJoaNK2mdLrJFOFy3BAnvR/Lcpqs
 
-### 브랜치 관리 전략
+## 브랜치 관리 전략
 
 Git Flow를 사용.<br />
 
@@ -32,6 +32,8 @@ Git Flow를 사용.<br />
 - Feature : 기능 개발을 진행할 때 사용
 - Release : 배포를 준비할 때 사용
 - Hot-Fix : 배포를 진행한 후 발생한 버그를 수정해야 할 때 사용.
-  <br>
+
+  <br />
   <b>브랜치 관리 전략 참고 문헌</b><br>
+
 - 우아한 형제들 기술 블로그(http://woowabros.github.io/experience/2017/10/30/baemin-mobile-git-branch-strategy.html)

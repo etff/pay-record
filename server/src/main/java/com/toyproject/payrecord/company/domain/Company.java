@@ -2,12 +2,16 @@ package com.toyproject.payrecord.company.domain;
 
 import com.toyproject.payrecord.config.BaseEntity;
 import com.toyproject.payrecord.employee.domain.Employee;
+import com.toyproject.payrecord.work.domain.Timeline;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -28,7 +32,15 @@ public class Company extends BaseEntity {
     @Column(name = "company_name")
     private String name;
 
-    @OneToOne(mappedBy = "company", fetch = LAZY)
+    @OneToMany(mappedBy = "company")
     @Setter
-    private Employee employee;
+    private List<Employee> employees = new ArrayList<>();
+
+    public void addEmployee(Employee employee) {
+        /**
+         * 연관관계 맵핑
+         */
+        employees.add(employee);
+        employee.setCompany(this);
+    }
 }

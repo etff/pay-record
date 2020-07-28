@@ -28,10 +28,11 @@ public class EmployeeService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public Long singUp(String email, String password) {
-        Optional<Employee> existed = employeeRepository.findByEmail(email);
-        if (existed.isPresent()) {
-            throw new EmailExistedException(email);
-        }
+        employeeRepository.findByEmail(email)
+                .ifPresent(m -> {
+                    throw new EmailExistedException(email);
+                });
+
         String encodedPassword = passwordEncoder.encode(password);
         Employee employee = new Employee(email, encodedPassword);
 

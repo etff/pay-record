@@ -1,34 +1,61 @@
 package com.toyproject.payrecord.config.auth.application;
 
-import com.toyproject.payrecord.employee.domain.Employee;
-import com.toyproject.payrecord.employee.domain.EmployeeRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.toyproject.payrecord.employee.domain.Role;
+import lombok.Builder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
-@Slf4j
-@RequiredArgsConstructor
-@Component
-public class CustomUserDetails {
-    private final EmployeeRepository employeeRepository;
+import java.util.*;
 
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+@Builder
+public class CustomUserDetails implements UserDetails {
+    private Long employeeId;
+    private String userName;
+    private String password;
+    private List<Role> authorities;
 
-        if (employee == null) {
-            throw new UsernameNotFoundException("user(email) name doesn't exist");
-        }
+    public Long getEmployeeId() {
+        return employeeId;
+    }
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(email)
-                .password(employee.getPassword())
-                .authorities(employee.getRoles())
-                .accountExpired(false)
-                .accountLocked(false)
-                .credentialsExpired(false)
-                .disabled(false)
-                .build();
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        Arrays.stream(Role.values())
+                .forEach(role -> {
+                    auth.add(new SimpleGrantedAuthority(role.getAuthority()));
+                });
+        return auth;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

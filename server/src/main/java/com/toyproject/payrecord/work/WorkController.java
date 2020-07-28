@@ -1,5 +1,6 @@
 package com.toyproject.payrecord.work;
 
+import com.toyproject.payrecord.config.auth.application.CustomUserDetails;
 import com.toyproject.payrecord.work.application.DayService;
 import com.toyproject.payrecord.work.application.TimelineService;
 import com.toyproject.payrecord.work.domain.WorkType;
@@ -9,7 +10,6 @@ import com.toyproject.payrecord.work.ui.dto.TimelineResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,8 +29,8 @@ public class WorkController {
             Authentication authentication,
             @Valid @RequestBody PlanRequest resource
     ) throws ParseException, URISyntaxException {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        dayService.createPlan(userDetails.getUsername(), resource);
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        dayService.createPlan(userDetails.getEmployeeId(), resource);
 
         String url = "/plan/" + userDetails.getUsername() + "/" + resource.getDate();
         return ResponseEntity.created(new URI(url)).body("{}");
@@ -41,9 +41,9 @@ public class WorkController {
             Authentication authentication,
             @PathVariable("date") String date
     ) throws ParseException {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        PlanResponse plan = dayService.getPlanByEmail(userDetails.getUsername(), date);
+        PlanResponse plan = dayService.getPlan(userDetails.getEmployeeId(), date);
 
         return ResponseEntity.ok(plan);
     }
@@ -52,13 +52,12 @@ public class WorkController {
     public ResponseEntity<?> startWork(
             Authentication authentication,
             @RequestParam WorkType workType
-            ) throws ParseException, URISyntaxException {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        TimelineResponse saved = timelineService.save(userDetails.getUsername(), workType.getValue());
+    ) throws ParseException, URISyntaxException {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        TimelineResponse saved = timelineService.save(userDetails.getEmployeeId(), workType.getValue());
         String url = "/timelines/" + saved.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
-
 
 
 }

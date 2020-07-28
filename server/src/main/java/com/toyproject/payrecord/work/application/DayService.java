@@ -21,6 +21,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DayService {
     private static final int TIME_PER_PAY = 10_000;
@@ -44,7 +45,7 @@ public class DayService {
         monthRepository.save(new Month(new MonthId(employee.getId(), date)));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public PlanResponse getPlanByEmail(String email, String date) {
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
         DayId dayId = new DayId(employee.getId(), date);

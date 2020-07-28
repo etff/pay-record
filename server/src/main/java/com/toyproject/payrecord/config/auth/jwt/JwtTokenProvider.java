@@ -1,5 +1,6 @@
 package com.toyproject.payrecord.config.auth.jwt;
 
+import com.toyproject.payrecord.config.auth.application.CustomUserDetailService;
 import com.toyproject.payrecord.config.auth.application.CustomUserDetails;
 import com.toyproject.payrecord.config.auth.application.exception.CustomException;
 import com.toyproject.payrecord.employee.domain.Role;
@@ -43,7 +44,7 @@ public class JwtTokenProvider {
 
     private static final Long EXPIRE_TIME = 60L * 60 * 2 * 1000;
 
-    private final CustomUserDetails customUserDetails;
+    private final CustomUserDetailService customUserDetailService;
 
     @PostConstruct
     protected void init() {
@@ -73,7 +74,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = customUserDetails.loadUserByUsername(getUsername(token));
+        CustomUserDetails userDetails = customUserDetailService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

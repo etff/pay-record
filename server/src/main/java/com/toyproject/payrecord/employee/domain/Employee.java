@@ -56,4 +56,8 @@ public class Employee extends BaseEntity {
     public void updateCompany(Company company) {
         this.company = company;
     }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }

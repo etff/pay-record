@@ -30,25 +30,24 @@ public class DayService {
     private final EmployeeRepository employeeRepository;
     private final MonthRepository monthRepository;
 
-    public void createPlan(String email, PlanRequest resource) {
+    @Transactional
+    public void createPlan(Long employeeId, PlanRequest resource) {
         String date = resource.getDate();
-        Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
         int startTime = 0;
         int endTime = 0;
 
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(IllegalArgumentException::new);
         startTime = getStartTime(resource);
         endTime = getEndTime(resource);
 
         Day saveDay = new Day(new DayId(employee.getId(), date), startTime, endTime, TIME_PER_PAY);
         
         dayRepository.save(saveDay);
-        monthRepository.save(new Month(new MonthId(employee.getId(), date)));
+        monthRepository.save(new Month(new MonthId(employeeId, date)));
     }
 
-    @Transactional
-    public PlanResponse getPlanByEmail(String email, String date) {
-        Employee employee = employeeRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
-        DayId dayId = new DayId(employee.getId(), date);
+    public PlanResponse getPlan(Long employeeId, String date) {
+        DayId dayId = new DayId(employeeId, date);
 
         Day day = dayRepository.findById(dayId).orElseThrow(IllegalArgumentException::new);
 

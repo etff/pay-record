@@ -26,16 +26,15 @@ public class Employee extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty(value = "이메일", required = true)
     @Column(name = "email", length = 30, nullable = false)
     private String email;
 
-    @ApiModelProperty(hidden = true)
     @Column(name = "password", length = 255, nullable = true)
     @JsonIgnore
     private String password;
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
+    @Setter
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -56,6 +55,5 @@ public class Employee extends BaseEntity {
 
     public void updateCompany(Company company) {
         this.company = company;
-        company.setEmployee(this);
     }
 }

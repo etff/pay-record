@@ -4,6 +4,7 @@ import com.toyproject.payrecord.config.auth.jwt.JwtTokenFilterConfigurer;
 import com.toyproject.payrecord.config.auth.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/auth").permitAll()
                 .antMatchers("/api/hcheck").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .and().authorizeRequests()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
@@ -56,14 +57,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v2/api-docs")
+                .antMatchers("/build/static/**")
+                .antMatchers("/static/**")
                 .antMatchers("/swagger-resources/**")
                 .antMatchers("/swagger-ui.html")
                 .antMatchers("/configuration/**")
                 .antMatchers("/webjars/**")
                 .antMatchers("/public")
+                .antMatchers("/index.html")
                 .and()
                 .ignoring()
                 .antMatchers("/h2-console/**/**");
+
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
